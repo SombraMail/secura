@@ -1,6 +1,6 @@
 import subprocess
 
-ip = str(input("Enter the IP address you want to scan "))
+ip = str(input("Enter the TARGET you want to scan "))
 
 # 192.168.1.172
 
@@ -12,7 +12,8 @@ def scan(ip, cmd):
 
 resp = input("""\nPlease enter the type of scan you want to run
                 1)General ports scan
-                2)Specific ports scan \n""")
+                2)Specific ports scan
+                3)Heart bleed vulnerability scan\n""")
 print("You have selected option: ", resp)
 if resp == '1':
     file = open('report.txt', 'a')
@@ -35,4 +36,9 @@ if resp == '2':
     cmd = f"-sS -p T:{port}"
     scan(ip, cmd)
     cmd = f"-sU -p U:{port}"
+    scan(ip, cmd)
+
+if resp == '3':
+
+    cmd = "-d --script ssl-heartbleed --script-args vulns.showall -sV "
     scan(ip, cmd)
